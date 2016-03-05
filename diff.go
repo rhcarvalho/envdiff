@@ -6,8 +6,7 @@ import (
 	"strings"
 )
 
-// Env represents an environment, a list of environment variables.
-type Env []Var
+const pathListSeparator = string(os.PathListSeparator)
 
 // Var represents a single environment variable. A Var should have a non-empty
 // Name, and zero or more values in Value. A single value should not contain
@@ -17,7 +16,8 @@ type Var struct {
 	Value []string
 }
 
-const pathListSeparator = string(os.PathListSeparator)
+// Env represents an environment, a list of environment variables.
+type Env []Var
 
 // Parse parses the string s with environment variables as printed by `env` or
 // `printenv` and returns an Env.
