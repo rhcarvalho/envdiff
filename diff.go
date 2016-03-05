@@ -19,8 +19,8 @@ type Var struct {
 
 const pathListSeparator = string(os.PathListSeparator)
 
-// Parse parses the string s with environment variables as printed by `printenv`
-// and returns an Env.
+// Parse parses the string s with environment variables as printed by `env` or
+// `printenv` and returns an Env.
 func Parse(s string) Env {
 	var env Env
 	for _, v := range strings.Split(s, "\n") {
