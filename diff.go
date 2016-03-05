@@ -32,7 +32,11 @@ func (e Env) asMap() map[string][]string {
 // `printenv` and returns an Env.
 func Parse(s string) Env {
 	var env Env
-	for _, v := range strings.Split(s, "\n") {
+	sep := "\n"
+	if strings.Contains(s, "\x00") {
+		sep = "\x00"
+	}
+	for _, v := range strings.Split(s, sep) {
 		pair := strings.SplitN(v, "=", 2)
 		if len(pair) < 2 {
 			pair = append(pair, "")

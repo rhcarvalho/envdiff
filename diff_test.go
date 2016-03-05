@@ -53,6 +53,15 @@ _=/usr/bin/printenv`,
 			{"_", []string{"/usr/bin/printenv"}},
 		},
 	},
+	{
+		// NUL separated variables so that values may contain newlines.
+		in: "PATH=/bin\x00TERM=xterm\x00BASH_FUNC_scl()=() {  local CMD=$1;\n if [ \"$CMD\" = \"load\" -o \"$CMD\" = \"unload\" ]; then\n eval \"module $@\";\n else\n /usr/bin/scl \"$@\";\n fi\n}",
+		want: Env{
+			{"PATH", []string{"/bin"}},
+			{"TERM", []string{"xterm"}},
+			{"BASH_FUNC_scl()", []string{"() {  local CMD=$1;\n if [ \"$CMD\" = \"load\" -o \"$CMD\" = \"unload\" ]; then\n eval \"module $@\";\n else\n /usr/bin/scl \"$@\";\n fi\n}"}},
+		},
+	},
 }
 
 func TestParse(t *testing.T) {
