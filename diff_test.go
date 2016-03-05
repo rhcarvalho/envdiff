@@ -18,6 +18,10 @@ var parseTests = []struct {
 		want: nil,
 	},
 	{
+		in:   "TERM=",
+		want: Env{{"TERM", []string{""}}},
+	},
+	{
 		in:   "TERM=xterm",
 		want: Env{{"TERM", []string{"xterm"}}},
 	},
