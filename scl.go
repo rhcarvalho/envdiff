@@ -132,6 +132,8 @@ func dockerRunUnsetEnv(env Env, image, entrypoint string, args ...string) *exec.
 	for _, e := range env {
 		s = append(s, "-e", e.Name)
 	}
+	// Reset PATH to Docker defaults.
+	s = append(s, "-e", "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin")
 	s = append(s, "--entrypoint", entrypoint, image)
 	s = append(s, args...)
 	return exec.Command("env", s...)
