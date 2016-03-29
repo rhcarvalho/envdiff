@@ -154,7 +154,7 @@ func writeAsDockerfile(w io.Writer, env Env, collections []string) {
 	for _, v := range env[1:] {
 		fmt.Fprintf(w, " \\\n    %s=%s", v.Name, strings.Join(v.Value, pathListSeparator))
 	}
-	fmt.Fprintln(w, "\n# ----------------------- end of generated instruction -----------------------")
+	fmt.Fprintln(w, "\n# ------------------------ end of generated instruction ------------------------")
 }
 
 // writeAsShell writes to w the environment variable in env, one per line. If
