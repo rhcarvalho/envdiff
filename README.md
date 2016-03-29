@@ -1,4 +1,4 @@
-# env-diff
+# envdiff
 
 Generates smart environment variable diffs.
 
