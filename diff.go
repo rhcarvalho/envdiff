@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"strings"
 )
@@ -17,6 +18,14 @@ type Var struct {
 
 // Env represents an environment, a list of environment variables.
 type Env []Var
+
+func (e Env) String() string {
+	var s []string
+	for _, v := range e {
+		s = append(s, fmt.Sprintf("%s=%s", v.Name, strings.Join(v.Value, pathListSeparator)))
+	}
+	return strings.Join(s, "\n")
+}
 
 // asMap return the environment e as a map.
 func (e Env) asMap() map[string][]string {
