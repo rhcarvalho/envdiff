@@ -109,3 +109,31 @@ PATH=/opt/rh/rh-python34/root/usr/bin:/usr/local/bin:/usr/bin
 XDG_DATA_DIRS=/opt/rh/rh-python34/root/usr/share
 PKG_CONFIG_PATH=/opt/rh/rh-python34/root/usr/lib64/pkgconfig
 ```
+
+### How does the scl mode works?
+
+What is `envdiff` doing to generate an environment that transforms an initial
+environment into one with collections enabled?  
+You can go read the code, it's all in the `scl.go` file, or follow along.
+
+First, we need to discover what collections are installed. This can be
+accomplished with `scl --list` in a container.
+
+Second, we need two environments: one without any collections enabled, and
+another one will all collections enabled.
+
+To get a clean environment, we run `bash -c env` in a temporary container. We
+wrap the call to `env` in a Bash shell to be closer to what we get by enabling
+collections. To make sure that the environment is clean no matter what is in the
+image, we unset all environment variables set in the image when creating a
+container.
+
+To get the environment with all collections enabled, it is `scl enable
+collection1 collection2 ... env`. In other words, we run `env` to dump the
+environment with all collections from the first step being enabled. Since `scl`
+has a shebang that points to `/bin/bash`, this time we don't wrap the `env` call
+like in the previous step.
+
+The last step is to do what `envdiff` is made to do: compare two environments.
+Producing output as a Dockerfile ENV instruction makes it convenient to modify
+existing Dockerfiles to permanently enable collections.
