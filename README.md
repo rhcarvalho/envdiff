@@ -2,6 +2,17 @@
 
 Generates smart environment diffs.
 
+The `envdiff` tool compares two environments, and tries to be smart where it
+can. For example, it can detect appends or prepends to lists like `PATH`.
+
+Given two environments `A` and `B`, `envdiff` computes `C` such that:
+
+```
+(export A; export C) == export B
+```
+
+Examples [here](#using).
+
 
 ## Installing
 
